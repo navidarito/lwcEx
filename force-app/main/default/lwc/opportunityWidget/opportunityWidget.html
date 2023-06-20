@@ -1,0 +1,19 @@
+<template>
+    <lightning-card style="margin: 10px;" >
+        <lightning-layout>
+       
+            <lightning-layout-item  padding="around-small" >
+            <lightning-input class="inputSearch" type="text"   value={conValue} onchange={handleChange} onkeypress={handleKeyPress}></lightning-input>
+             </lightning-layout-item>
+    
+             <lightning-layout-item  padding="around-small">
+                
+            <button class="slds-button slds-button_neutral" onclick={handleClick} label="Search">Search</button>
+            </lightning-layout-item>
+        </lightning-layout>
+        
+        <lightning-datatable data={data} columns={columns} key-field="id"></lightning-datatable>
+
+    </lightning-card>
+    
+</template>

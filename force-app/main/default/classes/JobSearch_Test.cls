@@ -62,7 +62,7 @@ public class JobSearch_Test {
     static void performSearch_RestrictedUser_Test() {
         
         User u = [SELECT Id,Name FROM User WHERE Profile.Name='Custom Standard User' limit 1];
-        System.debug(u);
+       
         System.runAs(u) {
             List<Job__c> jobList = new List<Job__c>();
             test.startTest();
@@ -95,7 +95,7 @@ public class JobSearch_Test {
     static void searchWithLuck_RestrictedUser_Test() {
         
         User u = [SELECT Id,Name FROM User WHERE Profile.Name='Custom Standard User' limit 1];
-        System.debug(u);
+ 
         System.runAs(u) {
             List<List<sObject>> searchList = new List<List<sObject>>();
             fixedSearch();

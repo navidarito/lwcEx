@@ -7,7 +7,7 @@ public with sharing class OpportunityWidgetController {
 
             List<Opportunity> opp = new List<Opportunity>();
             if(Opportunity.SObjectType.getDescribe().isAccessible()) {
-            opp =  [select Name, Amount, StageName from Opportunity where StageName!='Closed Won'];
+            opp =  [select Id, Name, Amount, StageName from Opportunity where StageName!='Closed Won'];
             }
             return opp;
             

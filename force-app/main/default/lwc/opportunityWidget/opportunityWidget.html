@@ -1,5 +1,7 @@
 <template>
+
     <lightning-card style="margin: 10px;" >
+        <img src={sfimage} alt="Salesforce Image" height="100px" width="100px"/>
         <lightning-layout>
        
             <lightning-layout-item  padding="around-small" >
@@ -8,11 +10,53 @@
     
              <lightning-layout-item  padding="around-small">
                 
-            <button class="slds-button slds-button_neutral" onclick={handleClick} label="Search">Search</button>
+            <button class="slds-button slds-button_neutral" onclick={handleClick} >Search</button>
             </lightning-layout-item>
         </lightning-layout>
         
-        <lightning-datatable data={data} columns={columns} key-field="id"></lightning-datatable>
+  
+
+        <div class="tableHeight slds-scrollable_y">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-no-row-hover">
+                <thead>
+                    <tr class="slds-line-height_reset">
+
+                        <th class="" scope="col">
+                            <div class="slds-truncate" >Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" >Amount</div>
+                        </th>
+
+                        <th class="" scope="col">
+                            <div class="slds-truncate" >Close-Won</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data} for:item="obj">
+                        <tr key={obj.Id}>
+
+                            <th scope="col">
+                                <div>{obj.Name}</div>
+                            </th>
+                            <th scope="col">
+                                <div>{obj.Amount}</div>
+                            </th>
+                            <th scope="col">
+                                <div>
+                                    <lightning-input type="checkbox" value={obj.Id} name={obj.Id}
+                                        data-check={obj.Id} data-key="singleSelectColumnCheckbox"
+                                        onchange={showToast}>
+                                    </lightning-input>
+                                </div>
+                            </th>
+
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
 
     </lightning-card>
     

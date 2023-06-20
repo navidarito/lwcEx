@@ -3,35 +3,31 @@ public class JobSearch_Test {
     
 	@testSetup
     static void makeData() {
-        
-        User u = [SELECT Id FROM User WHERE Profile.Name='System Administrator' limit 1];
-        System.runAs(u) {
-            List<Job__c> jobs = new List<Job__c>();
-            List<String> jobNames =  new List<String>{'Frontend-Developer','Backend-Developer','FullStack-Developer','Salesforce-Developer','React-Developer',
+
+        List<Job__c> jobs = new List<Job__c>();
+        List<String> jobNames =  new List<String>{'Frontend-Developer','Backend-Developer','FullStack-Developer','Salesforce-Developer','React-Developer',
                 'Software-Engineer','Salesforce-Administrator','Junior-Software-Engineer','Mid-Software-Engineer','Senior-Software-Engineer'};
-            String jobDescription = 'A top-notch professional is needed';
-            for(Integer count=0 ;count <10;count++){
+        String jobDescription = 'A top-notch professional is needed';
+        for(Integer count=0 ;count <10;count++){
                 Job__c job = new Job__c();
                 job.Name = jobNames[count];
                 job.Job_Description__c = jobDescription;
                 jobs.add(job);
-            }        
-            insert jobs;
-         
-        }
-        
+        }        
+        insert jobs;
+
         User u2 = [SELECT Id FROM User WHERE Profile.Name='Custom Standard User' limit 1];
         System.runAs(u2) {
-            List<Job__c> jobs = new List<Job__c>();
-            List<String> jobNames =  new List<String>{'Senior-Frontend-Developer','Senior-Backend-Developer','Senior-Software-Engineer','Salesforce-Architect','Senior-Salesforce-Administrator'};
-            String jobDescription = 'A top-notch professional is needed';
+            List<Job__c> jobs2 = new List<Job__c>();
+            List<String> jobNames2 =  new List<String>{'Senior-Frontend-Developer','Senior-Backend-Developer','Senior-Software-Engineer','Salesforce-Architect','Senior-Salesforce-Administrator'};
+            String jobDescription2 = 'A top-notch professional is needed';
             for(Integer count=0 ;count <5;count++){
                 Job__c job = new Job__c();
-                job.Name = jobNames[count];
-                job.Job_Description__c = jobDescription;
-                jobs.add(job);
+                job.Name = jobNames2[count];
+                job.Job_Description__c = jobDescription2;
+                jobs2.add(job);
             }        
-            insert jobs;
+            insert jobs2;
         }      
         
     }
@@ -58,8 +54,7 @@ public class JobSearch_Test {
         jobList = JobSearch.performSearch('developer');
         
         test.stopTest();  
-        
-        System.debug(jobList.size());
+
         System.assertEquals( jobList.size(), 7);
     }
     
@@ -76,7 +71,6 @@ public class JobSearch_Test {
             
             test.stopTest();  
             
-            System.debug(jobList.size());
             System.assertEquals( jobList.size(), 2);
         }
         
@@ -93,8 +87,7 @@ public class JobSearch_Test {
         searchList = JobSearch.searchWithLuck('top-notch');
         
         test.stopTest();  
-        
-        System.debug(searchList);
+
         System.assertEquals( searchList[0].size(), 15);
     }
     
@@ -112,8 +105,7 @@ public class JobSearch_Test {
             searchList = JobSearch.searchWithLuck('top-notch');
             
             test.stopTest();  
-            
-            System.debug(searchList);
+
             System.assertEquals( searchList[0].size(), 5);
         }
     }

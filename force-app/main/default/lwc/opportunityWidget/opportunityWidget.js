@@ -42,7 +42,7 @@ export default class OpportunityWidget extends LightningElement {
         this.selectedRecordId=event.target.value;
         //console.log(this.selectedRecordId);
         closeOpportunity(this.selectedRecordId);
-        getOpenOpportunities(this.oppName);
+        this.oppName=null;
     }
 
     handleSingleCheckboxSelect(event) {
@@ -60,6 +60,13 @@ export default class OpportunityWidget extends LightningElement {
             mode: 'dismissable'
         });
         this.dispatchEvent(event);
+    }
+
+    handleChange(event){
+        this.oppValue=event.target.value;
+        this.oppName=event.target.value;
+        console.log(this.oppName);
+  
     }
 
 }

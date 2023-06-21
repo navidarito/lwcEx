@@ -1,23 +1,19 @@
 <template>
 
-    <lightning-card style="margin: 10px;" >
-        <img src={sfimage} alt="Salesforce Image" height="100px" width="100px"/>
-        <lightning-layout>
+    <lightning-card style="margin: 10px;"  class="showTable">
+        <img src={sfimage} alt="Salesforce Image" class="sfimage"/>
+        <lightning-layout class="slds-grid slds-grid_align-center">
        
-            <lightning-layout-item  padding="around-small" >
-            <lightning-input class="inputSearch" type="text"   value={conValue} onchange={handleChange} onkeypress={handleKeyPress}></lightning-input>
-             </lightning-layout-item>
-    
-             <lightning-layout-item  padding="around-small">
-                
-            <button class="slds-button slds-button_neutral" onclick={handleClick} >Search</button>
+            <lightning-layout-item  padding="around-medium" >
+            <lightning-input class="inputSearch" type="text" placeholder="Search"  value={oppValue} onchange={handleChange} ></lightning-input>
+     
             </lightning-layout-item>
         </lightning-layout>
         
   
 
         <div class="tableHeight slds-scrollable_y">
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-no-row-hover">
+            <table class="slds-table slds-table_striped ">
                 <thead>
                     <tr class="slds-line-height_reset">
 
@@ -47,7 +43,7 @@
                                 <div>
                                     <lightning-input type="checkbox" value={obj.Id} name={obj.Id}
                                         data-check={obj.Id} data-key="singleSelectColumnCheckbox"
-                                        onchange={showToast}>
+                                        onchange={handleTodoChange}>
                                     </lightning-input>
                                 </div>
                             </th>
@@ -57,6 +53,12 @@
                 </tbody>
             </table>
         </div>
+
+    </lightning-card>
+
+    <lightning-card style="display:none;"  class="hideTable">
+        <img src={sfimage} alt="Salesforce Image" class="sfimage"/>
+        <div>No data</div>
 
     </lightning-card>
     

@@ -1,0 +1,19 @@
+
+
+.sfimage{
+    height: 200px;
+    width: 200px;
+    margin-left: 40px;
+}
+
+.inputSearch{
+    text-align: center;
+}
+
+
+
+table {
+    border: 2px solid black;
+    border-radius: 20px;
+    border-collapse: collapse;
+}

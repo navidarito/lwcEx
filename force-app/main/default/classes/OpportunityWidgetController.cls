@@ -25,16 +25,17 @@ public with sharing class OpportunityWidgetController {
 
     @AuraEnabled(cacheable=true)
     public static void closeOpportunity(String id){
-
-        List<Opportunity> opp = new List<Opportunity>();
+       
         if(id != null){
-            opp = [select Id, StageName from Opportunity where Id = :id ];
-            for(Opportunity oppItem : opp) {
-                oppItem.StageName='Closed Won';
-            }
+            if(Opportunity.SObjectType.getDescribe().isAccessible()) {
+            Opportunity opp  = [select StageName, Id, Name from Opportunity where Id = :id ];
+            opp.StageName='Closed Won';
             
             update opp;
+            }
         }
     }
+
+  
 
 }

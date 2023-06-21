@@ -6,6 +6,7 @@ import lwcpic from '@salesforce/resourceUrl/lwcpic';
 
 export default class OpportunityWidget extends LightningElement {
     sfimage = lwcpic;
+    message=null;
     @track selectedRecordId 
     @track oppName=null;
     @track data;
@@ -37,12 +38,28 @@ export default class OpportunityWidget extends LightningElement {
         }
     }
 
+    @wire(closeOpportunity,{id :'$selectedRecordId'})
+    closingOpp({error}){
+        this.showToast();
+        if(error){
+            this.error=error;
+        }else{
+            this.showToast();
+        }
+    }
+
     handleTodoChange(event) {
-        this.value = event.target.checked;        
+        this.value = event.target.checked; 
+        console.log(this.data[0].Name);      
+        for (let index = 0; index < this.data.length; index++) {
+            if(this.data[index].Id==event.target.value){
+                this.message=this.data[index].Name;
+            }
+            
+        } 
         this.selectedRecordId=event.target.value;
-        //console.log(this.selectedRecordId);
-        closeOpportunity(this.selectedRecordId);
-        this.oppName=null;
+        console.log(this.selectedRecordId);
+        this.oppName=' ';
     }
 
     handleSingleCheckboxSelect(event) {
@@ -55,7 +72,7 @@ export default class OpportunityWidget extends LightningElement {
     showToast() {
         const event = new ShowToastEvent({
             title: 'Toast message',
-            message: 'Congratulations!! '+this.selectedRecordId,
+            message: 'Congratulations!! '+this.message,
             variant: 'success',
             mode: 'dismissable'
         });

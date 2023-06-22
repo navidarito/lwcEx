@@ -8,6 +8,8 @@ import { refreshApex } from '@salesforce/apex';
 export default class OpportunityWidget extends LightningElement {
     sfimage = lwcpic;
     message=null;
+    showTable;
+    showNoDataMessage;
     @track selectedRecordId 
     @track oppName=null;
     @track data;
@@ -22,20 +24,15 @@ export default class OpportunityWidget extends LightningElement {
     @wire(getOpenOpportunities,{keyword:'$oppName'})
     wiredOpp({error,data}){
         if(data){
+            this.showTable=true;
             this.data=data;
             this.error=undefined;
-            // let showTable = this.template.querySelector(".showTable");
-            // showTable.setAttribute("style","display:block");
-            // let hideTable = this.template.querySelector(".hideTable");
-            // hideTable.setAttribute("style","display:none");
         }
         else{
             this.error=error;
+            this.showTable=false;
             this.data = undefined;
-            // let showTable = this.template.querySelector(".showTable");
-            // showTable.setAttribute("style","display:none");
-            // let hideTable = this.template.querySelector(".hideTable");
-            // hideTable.setAttribute("style","display:block");
+            
         }
     }
 

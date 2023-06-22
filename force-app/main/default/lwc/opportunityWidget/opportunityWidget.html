@@ -1,65 +1,69 @@
 <template>
 
-    <lightning-card style="margin: 10px;"  class="showTable">
-        <img src={sfimage} alt="Salesforce Image" class="sfimage"/>
-        <lightning-layout class="slds-grid slds-grid_align-center">
-       
-            <lightning-layout-item  padding="around-medium" >
-            <lightning-input class="inputSearch" type="text" placeholder="Search"  value={oppValue} onchange={handleChange} ></lightning-input>
-     
-            </lightning-layout-item>
-        </lightning-layout>
-        
-  
-
-        <div class="tableHeight slds-scrollable_y">
-            <table class="slds-table slds-table_striped ">
-                <thead>
-                    <tr class="slds-line-height_reset">
-
-                        <th class="" scope="col">
-                            <div class="slds-truncate" >Name</div>
-                        </th>
-                        <th class="" scope="col">
-                            <div class="slds-truncate" >Amount</div>
-                        </th>
-
-                        <th class="" scope="col">
-                            <div class="slds-truncate" >Close-Won</div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template for:each={data} for:item="obj">
-                        <tr key={obj.Id}>
-
-                            <th scope="col">
-                                <div>{obj.Name}</div>
+    <template lwc:if={showTable}>
+        <lightning-card style="margin: 10px;"  class="showTable">
+            <img src={sfimage} alt="Salesforce Image" class="sfimage"/>
+            <lightning-layout class="slds-grid slds-grid_align-center">
+           
+                <lightning-layout-item  padding="around-medium" >
+                <lightning-input class="inputSearch" type="text" placeholder="Search"  value={oppValue} onchange={handleChange} ></lightning-input>
+         
+                </lightning-layout-item>
+            </lightning-layout>
+            
+      
+    
+            <div class="tableHeight slds-scrollable_y">
+                <table class="slds-table slds-table_striped ">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+    
+                            <th class="" scope="col">
+                                <div class="slds-truncate" >Name</div>
                             </th>
-                            <th scope="col">
-                                <div>{obj.Amount}</div>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" >Amount</div>
                             </th>
-                            <th scope="col">
-                                <div>
-                                    <lightning-input type="checkbox" value={obj.Id} name={obj.Id}
-                                        data-check={obj.Id} data-key="singleSelectColumnCheckbox"
-                                        onchange={updateOpportunity}>
-                                    </lightning-input>
-                                </div>
+    
+                            <th class="" scope="col">
+                                <div class="slds-truncate" >Close-Won</div>
                             </th>
-
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        <template for:each={data} for:item="obj">
+                            <tr key={obj.Id}>
+    
+                                <th scope="col">
+                                    <div>{obj.Name}</div>
+                                </th>
+                                <th scope="col">
+                                    <div>{obj.Amount}</div>
+                                </th>
+                                <th scope="col">
+                                    <div>
+                                        <lightning-input type="checkbox" value={obj.Id} name={obj.Id}
+                                            data-check={obj.Id} data-key="singleSelectColumnCheckbox"
+                                            onchange={updateOpportunity}>
+                                        </lightning-input>
+                                    </div>
+                                </th>
+    
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+    
+        </lightning-card>
+    </template>
 
-    </lightning-card>
+    <template lwc:else>
+        <lightning-card style="display:none;"  class="hideTable">
+            <img src={sfimage} alt="Salesforce Image" class="sfimage"/>
+            <div>Sorry, no data</div>
 
-    <lightning-card style="display:none;"  class="hideTable">
-        <img src={sfimage} alt="Salesforce Image" class="sfimage"/>
-        <div>No data</div>
-
-    </lightning-card>
+        </lightning-card>
+    </template>
     
 </template>

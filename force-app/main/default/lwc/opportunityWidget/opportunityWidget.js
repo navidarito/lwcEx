@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getOpenOpportunities from '@salesforce/apex/OpportunityWidgetController.getOpenOpportunities';
 import closeOpportunity from '@salesforce/apex/OpportunityWidgetController.closeOpportunity';
 import lwcpic from '@salesforce/resourceUrl/lwcpic';
+import { refreshApex } from '@salesforce/apex';
 
 export default class OpportunityWidget extends LightningElement {
     sfimage = lwcpic;
@@ -38,35 +39,26 @@ export default class OpportunityWidget extends LightningElement {
         }
     }
 
-    @wire(closeOpportunity,{id :'$selectedRecordId'})
-    closingOpp({error}){
-        this.showToast();
-        if(error){
-            this.error=error;
-        }else{
-            this.showToast();
-        }
-    }
+    updateOpportunity(event){
 
-    handleTodoChange(event) {
-        this.value = event.target.checked; 
-        console.log(this.data[0].Name);      
+        this.selectedRecordId=event.target.value;
         for (let index = 0; index < this.data.length; index++) {
             if(this.data[index].Id==event.target.value){
                 this.message=this.data[index].Name;
             }
             
         } 
-        this.selectedRecordId=event.target.value;
-        console.log(this.selectedRecordId);
-        this.oppName=' ';
-    }
-
-    handleSingleCheckboxSelect(event) {
-        const boxes = this.template.querySelectorAll('lightning-input[data-key="singleSelectColumnCheckbox"]');
-        boxes.forEach(box => box.checked = event.target.value === box.value);
-        console.log(boxes);
-        
+        closeOpportunity({
+            id:this.selectedRecordId
+        })
+        .then(() => {
+            console.log('SUCCESS');
+            this.showToast();
+        })
+        .catch((error) => {
+            this.errorMessage=error;
+			console.log('unable to update the record due to'+JSON.stringify(this.errorMessage));
+        });
     }
 
     showToast() {
@@ -76,14 +68,12 @@ export default class OpportunityWidget extends LightningElement {
             variant: 'success',
             mode: 'dismissable'
         });
+        this.oppName=' ';
         this.dispatchEvent(event);
     }
 
     handleChange(event){
-        this.oppValue=event.target.value;
         this.oppName=event.target.value;
-        console.log(this.oppName);
-  
     }
 
 }

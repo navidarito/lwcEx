@@ -23,17 +23,26 @@ public with sharing class OpportunityWidgetController {
     
     }
 
-    @AuraEnabled(cacheable=true)
-    public static void closeOpportunity(String id){
-       
+    @AuraEnabled
+    public static List<Opportunity> closeOpportunity(String id){
+       	
+        System.debug('@@@@OpportunityId@@@'+id);
         if(id != null){
-            if(Opportunity.SObjectType.getDescribe().isAccessible()) {
+            
             Opportunity opp  = [select StageName, Id, Name from Opportunity where Id = :id ];
             opp.StageName='Closed Won';
             
-            update opp;
+            
+            
+            try{
+           		update opp;
             }
+            catch (Exception e) {
+               System.debug('unable to update the record due to'+e.getMessage());
+            }
+            
         }
+        return getOpenOpportunities('');
     }
 
   
